@@ -8,6 +8,9 @@ public class Word {
     /** Miwok translation for the word */
     private String mMiwokTranslation;
 
+    private int mImageResourceId;
+    private static final int NO_IMAGE_PROVIDED = -1;
+
     /**
      * Create a new Word object.
      *
@@ -18,6 +21,12 @@ public class Word {
     public Word(String defaultTranslation, String miwokTranslation) {
         mDefaultTranslation = defaultTranslation;
         mMiwokTranslation = miwokTranslation;
+    }
+
+    public Word(String defaultTranslation, String miwokTranslation, int imageResourceId) {
+        mDefaultTranslation = defaultTranslation;
+        mMiwokTranslation = miwokTranslation;
+        mImageResourceId = imageResourceId;
     }
 
     /**
@@ -34,4 +43,15 @@ public class Word {
         return mMiwokTranslation;
     }
 
+    public int getImageResourceId (){
+        return mImageResourceId;
+    }
+
+    public void setImageResourceId (int minusOne){
+        mImageResourceId = minusOne;
+    }
+
+    public boolean hasImage(){
+        return mImageResourceId != NO_IMAGE_PROVIDED;
+    }
 }
