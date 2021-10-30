@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void addListeners(){
 
-
         TextView numbersView = ((TextView)findViewById(R.id.numbers));
         numbersView.setOnClickListener(new View.OnClickListener(){
 
@@ -87,10 +86,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /*
-    public void openNumbersList(View view){
-        Intent numbersIntent = new Intent(this,NumbersActivity.class);
-        startActivity(numbersIntent);
-    }
-    */
 }
