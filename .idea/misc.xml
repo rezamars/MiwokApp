@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Reza/AndroidStudioProjects/MiwokApp/app/src/main/res/layout/list_item.xml" value="0.1609375" />
+        <entry key="..\:/Users/Reza/AndroidStudioProjects/MiwokApp/app/src/main/res/layout/activity_main.xml" value="0.1609375" />
+        <entry key="..\:/Users/Reza/AndroidStudioProjects/MiwokApp/app/src/main/res/layout/list_item.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/Reza/AndroidStudioProjects/MiwokApp/app/src/main/res/layout/word_list.xml" value="0.1609375" />
         <entry key="..\:/Users/Reza/Desktop/Miwoke/ud839_Miwok-Starter-code/app/src/main/res/layout/activity_colors.xml" value="0.1" />
         <entry key="..\:/Users/Reza/Desktop/Miwoke/ud839_Miwok-Starter-code/app/src/main/res/layout/activity_family.xml" value="0.1" />
         <entry key="..\:/Users/Reza/Desktop/Miwoke/ud839_Miwok-Starter-code/app/src/main/res/layout/activity_main.xml" value="0.1" />
