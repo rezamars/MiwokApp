@@ -3,17 +3,20 @@ package com.example.android.miwok;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class PhrasesActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class FamilyFragment extends Fragment {
 
     private MediaPlayer mMediaPlayer;
     private AudioManager mAudioManager;
@@ -47,39 +50,40 @@ public class PhrasesActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
+    public FamilyFragment() {
+        // Required empty public constructor
+    }
 
-        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.word_list, container, false);
+
+        mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         // Create a list of words
         final ArrayList<Word> words = new ArrayList<Word>();
-        words.add(new Word("Where are you going?", "minto wuksus",
-                R.raw.phrase_where_are_you_going));
-        words.add(new Word("What is your name?", "tinnә oyaase'nә",
-                R.raw.phrase_what_is_your_name));
-        words.add(new Word("My name is...", "oyaaset...",
-                R.raw.phrase_my_name_is));
-        words.add(new Word("How are you feeling?", "michәksәs?",
-                R.raw.phrase_how_are_you_feeling));
-        words.add(new Word("I’m feeling good.", "kuchi achit",
-                R.raw.phrase_im_feeling_good));
-        words.add(new Word("Are you coming?", "әәnәs'aa?",
-                R.raw.phrase_are_you_coming));
-        words.add(new Word("Yes, I’m coming.", "hәә’ әәnәm",
-                R.raw.phrase_yes_im_coming));
-        words.add(new Word("I’m coming.", "әәnәm",
-                R.raw.phrase_im_coming));
-        words.add(new Word("Let’s go.", "yoowutis",
-                R.raw.phrase_lets_go));
-        words.add(new Word("Come here.", "әnni'nem",
-                R.raw.phrase_come_here));
-
-        for(int i = 0 ; i < words.size() ; i++){
-            words.get(i).setImageResourceId(-1);
-        }
+        words.add(new Word("father", "әpә",
+                R.drawable.family_father, R.raw.family_father));
+        words.add(new Word("mother", "әṭa",
+                R.drawable.family_mother, R.raw.family_mother));
+        words.add(new Word("son", "angsi",
+                R.drawable.family_son, R.raw.family_son));
+        words.add(new Word("daughter", "tune",
+                R.drawable.family_daughter, R.raw.family_daughter));
+        words.add(new Word("older brother", "taachi",
+                R.drawable.family_older_brother, R.raw.family_older_brother));
+        words.add(new Word("younger brother", "chalitti",
+                R.drawable.family_younger_brother, R.raw.family_younger_brother));
+        words.add(new Word("older sister", "teṭe",
+                R.drawable.family_older_sister, R.raw.family_older_sister));
+        words.add(new Word("younger sister", "kolliti",
+                R.drawable.family_younger_sister, R.raw.family_younger_sister));
+        words.add(new Word("grandmother", "ama",
+                R.drawable.family_grandmother, R.raw.family_grandmother));
+        words.add(new Word("grandfather", "paapa",
+                R.drawable.family_grandfather, R.raw.family_grandfather));
 
         // Create an {@link ArrayAdapter}, whose data source is a list of Strings. The
         // adapter knows how to create layouts for each item in the list, using the
@@ -87,12 +91,12 @@ public class PhrasesActivity extends AppCompatActivity {
         // This list item layout contains a single {@link TextView}, which the adapter will set to
         // display a single word.
         WordAdapter adapter =
-                new WordAdapter(this, words, R.color.category_phrases);
+                new WordAdapter(getActivity(), words, R.color.category_family);
 
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
         // activity_numbers.xml layout file.
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) rootView.findViewById(R.id.list);
 
         // Make the {@link ListView} use the {@link ArrayAdapter} we created above, so that the
         // {@link ListView} will display list items for each word in the list of words.
@@ -123,7 +127,7 @@ public class PhrasesActivity extends AppCompatActivity {
 
                     // Create and setup the {@link MediaPlayer} for the audio resource associated
                     // with the current word
-                    mMediaPlayer = MediaPlayer.create(PhrasesActivity.this,
+                    mMediaPlayer = MediaPlayer.create(getActivity(),
                             word.getAudioResourceId());
 
                     // Start the audio file
@@ -136,7 +140,9 @@ public class PhrasesActivity extends AppCompatActivity {
 
             }
         });
+        return rootView;
     }
+
 
     /**
      * This listener gets triggered when the {@link MediaPlayer} has completed
@@ -151,7 +157,7 @@ public class PhrasesActivity extends AppCompatActivity {
     };
 
     @Override
-    protected void onStop(){
+    public void onStop(){
         super.onStop();
         releaseMediaPlayer();
     }
@@ -175,4 +181,5 @@ public class PhrasesActivity extends AppCompatActivity {
             mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
     }
+
 }

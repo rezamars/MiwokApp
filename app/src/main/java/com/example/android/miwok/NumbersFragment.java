@@ -3,20 +3,20 @@ package com.example.android.miwok;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class NumbersActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class NumbersFragment extends Fragment {
 
     private MediaPlayer mMediaPlayer;
     private AudioManager mAudioManager;
@@ -50,12 +50,19 @@ public class NumbersActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.word_list);
 
-        mAudioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+    public NumbersFragment() {
+        // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.word_list, container, false);
+
+        /** TODO: Insert all the code from the NumberActivity’s onCreate() method after the setContentView method call */
+
+        mAudioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
 
         // Create a list of words
         final ArrayList<Word> words = new ArrayList<Word>();
@@ -86,12 +93,12 @@ public class NumbersActivity extends AppCompatActivity {
         // This list item layout contains a single {@link TextView}, which the adapter will set to
         // display a single word.
         WordAdapter adapter =
-                new WordAdapter(this, words, R.color.category_numbers);
+                new WordAdapter(getActivity(), words, R.color.category_numbers);
 
         // Find the {@link ListView} object in the view hierarchy of the {@link Activity}.
         // There should be a {@link ListView} with the view ID called list, which is declared in the
         // activity_numbers.xml layout file.
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) rootView.findViewById(R.id.list);
 
         // Make the {@link ListView} use the {@link ArrayAdapter} we created above, so that the
         // {@link ListView} will display list items for each word in the list of words.
@@ -119,7 +126,7 @@ public class NumbersActivity extends AppCompatActivity {
 
                     // Create and setup the {@link MediaPlayer} for the audio resource associated
                     // with the current word
-                    mMediaPlayer = MediaPlayer.create(NumbersActivity.this,
+                    mMediaPlayer = MediaPlayer.create(getActivity(),
                             word.getAudioResourceId());
 
                     // Start the audio file
@@ -133,7 +140,18 @@ public class NumbersActivity extends AppCompatActivity {
 
             }
         });
+
+        return rootView;
     }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        // When the activity is stopped, release the media player resources because we won't
+        // be playing any more sounds.
+        releaseMediaPlayer();
+    }
+
 
     /**
      * This listener gets triggered when the {@link MediaPlayer} has completed
@@ -141,18 +159,13 @@ public class NumbersActivity extends AppCompatActivity {
      */
     private MediaPlayer.OnCompletionListener mCompletionListener = new
             MediaPlayer.OnCompletionListener() {
-        @Override
-        public void onCompletion(MediaPlayer mediaPlayer) {
-            // Now that the sound file has finished playing, release the media player resources.
-            releaseMediaPlayer();
-        }
-    };
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    // Now that the sound file has finished playing, release the media player resources.
+                    releaseMediaPlayer();
+                }
+            };
 
-    @Override
-    protected void onStop(){
-        super.onStop();
-        releaseMediaPlayer();
-    }
 
     /**
      * Clean up the media player by releasing its resources.
@@ -173,6 +186,5 @@ public class NumbersActivity extends AppCompatActivity {
             mAudioManager.abandonAudioFocus(mOnAudioFocusChangeListener);
         }
     }
-
 
 }
